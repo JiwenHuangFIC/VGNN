@@ -28,6 +28,31 @@ class TensorFusionLayer(nn.Module):
         x_return = F.elu(self.fc(x_concat))
         return x_return, R
 
+class MatrixFusionLayer(nn.Module):
+    """Matrix-based Fusion Method"""
+    def __init__(self, in_features, out_features, dropout):
+        super(MatrixFusionLayer, self).__init__()
+        self.in_features = in_features
+        self.out_features = out_features
+        self.out_features = out_features
+        self.dropout = dropout
+
+        self.U = nn.Parameter(torch.empty(size=(in_features, 32)))
+        nn.init.xavier_uniform_(self.U.data, gain=1.414)
+        self.W = nn.Parameter(torch.empty(size=(in_features + 32, out_features)))
+        nn.init.xavier_uniform_(self.W.data, gain=1.414)
+        self.b = nn.Parameter(torch.empty(size=(1, out_features)))
+        nn.init.xavier_uniform_(self.b.data, gain=1.414)
+
+    def forward(self, inputdata):
+        summed_features_emb_square = torch.matmul(inputdata, self.U) ** 2
+        squared_sum_features_emb = torch.matmul(inputdata ** 2, self.U ** 2)
+        x_inter = 0.5 * (summed_features_emb_square - squared_sum_features_emb)
+        x_concat = torch.cat((inputdata, x_inter), dim=1)
+        x_return = torch.tanh(torch.matmul(x_concat, self.W).add(self.b))
+
+        return x_return, torch.tensor(0, device=inputdata.device)
+
 
 class ImplicitLayer(nn.Module):
     """Attention Mechanism for Implicit Relation"""

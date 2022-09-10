@@ -2,13 +2,13 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from layers import TensorFusionLayer, ImplicitLayer, ExplicitLayer, AttributeGate
+from layers import TensorFusionLayer, MatrixFusionLayer, ImplicitLayer, ExplicitLayer, AttributeGate
 
 class VGNN(nn.Module):
-    def __init__(self, nfeat, nhid, hidden_RNN, hidden_spillover, nclass, dropout, alpha, TensorFusion=True, Implicit=True, Explicit=True):
+    def __init__(self, nfeat, nhid, hidden_RNN, hidden_spillover, nclass, dropout, alpha, Fusion=True, Implicit=True, Explicit=True, FusionMethod='TenosrBased'):
         """Tensor-based Feature Fusion Module"""
         super(VGNN, self).__init__()
-        self.tensorfusion_c = TensorFusion
+        self.fusion_c = Fusion
         self.implicit_c = Implicit
         self.explicit_c = Explicit
         self.dropout = dropout
@@ -16,15 +16,17 @@ class VGNN(nn.Module):
         self.nclass = nclass
         self.alpha = alpha
 
-        self.fusion = TensorFusionLayer(nfeat, nhid, dropout)
+        if FusionMethod == 'TenosrBased':
+            self.fusion = TensorFusionLayer(nfeat, nhid, dropout)
+        elif FusionMethod == 'MatrixBased':
+            self.fusion = MatrixFusionLayer(nfeat, nhid, dropout)
         self.fc_no_fusion = nn.Linear(nfeat, nhid)
         self.rnn = nn.GRU(nhid, hidden_RNN)
         self.implicit = ImplicitLayer(hidden_RNN, nhid, dropout, alpha)
         self.explicit = ExplicitLayer(hidden_RNN, nhid, dropout)
         self.attribute = AttributeGate(hidden_RNN, hidden_spillover, dropout)
         self.out_1 = nn.Linear(hidden_RNN + hidden_spillover, 16)
-        # self.out_2 = nn.Linear(32, 16)
-        self.out_3 = nn.Linear(16, nclass)
+        self.out_2 = nn.Linear(16, nclass)
 
         self.graph_W = nn.Parameter(torch.empty(size=(hidden_RNN, hidden_spillover)))
         nn.init.xavier_uniform_(self.graph_W.data)
@@ -32,7 +34,7 @@ class VGNN(nn.Module):
     def forward(self, A_Ind, A_Loc, inputdata):
 
         # Obtain the fusion features
-        if self.tensorfusion_c:
+        if self.fusion_c:
             n_window = inputdata.size(0)
             n_firm = inputdata.size(1)
             regularization_R = 0
@@ -79,7 +81,5 @@ class VGNN(nn.Module):
         # output mapping
         H = F.elu(self.out_1(H))
         H = F.dropout(H, self.dropout, training=self.training)
-        # H = F.elu(self.out_2(H))
-        # H = F.dropout(H, self.dropout, training=self.training)
-        H = self.out_3(H)
+        H = self.out_2(H)
         return H, implicit_relation, regularization_R

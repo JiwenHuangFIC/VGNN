@@ -1,15 +1,11 @@
 # Learning to Understand the Vague Graph for Stock Prediction with Momentum Spillovers
-
-***
 This is the source code of our manuscript, 
 named Learning to Understand the Vague Graph forStock Prediction with Momentum Spillovers
 
 ## Model architechture
-***
 ![image](./Pictures/model_architecture.jpeg) 
 
 ## Overview
-***
 * `layers.py` contains three modules of the VGNN model: Vague Node Representation (`TensorFusionLayer`, `MatrixFusionLayer`),
 Vague Node Links (`ImplicitLayer`, `ExplicitLayer`), 
   Attribute-sensitive Message Passing (`AttributeGate`);
@@ -27,7 +23,6 @@ a full training run on our dataset.
 * `Simulation.ipynb` contains a simple test based on simulated data to vividly illustrate the effectiveness of the proposed tensor-based
 fusion for solving dynamic interactions.
 ## Environment
-***
 * Python==3.8.5 
   
 * PyTorch==1.6.0 
@@ -37,13 +32,11 @@ fusion for solving dynamic interactions.
 * Pandas==1.1.3
 
 ## Run
-***
 ```
 $ python train_evaluation.py 
 ```
 
 ## Data
-***
 The dataset can be found at our project website:http://quant.zxlearn.cn
 ```
 Processed data

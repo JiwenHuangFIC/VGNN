@@ -37,31 +37,20 @@ $ python train_evaluation.py
 ```
 
 ## Data
-The dataset can be found at our project website:http://quant.zxlearn.cn
-```
-Processed data
-├── Six Datasets
-│   ├── Subset_1.pkl
-│   ├── Subset_2.pkl
-│   ├── Subset_3.pkl
-│   ├── Subset_4.pkl
-│   ├── Subset_5.pkl
-│   └── Subset_6.pkl
-└── Six Datasets relations
-    ├── industry
-    │   ├── Subset_1_industry_relation.pkl
-    │   ├── Subset_2_industry_relation.pkl
-    │   ├── Subset_3_industry_relation.pkl
-    │   ├── Subset_4_industry_relation.pkl
-    │   ├── Subset_5_industry_relation.pkl
-    │   └── Subset_6_industry_relation.pkl
-    └── location
-        ├── Subset_1_location_relation.pkl
-        ├── Subset_2_location_relation.pkl
-        ├── Subset_3_location_relation.pkl
-        ├── Subset_4_location_relation.pkl
-        ├── Subset_5_location_relation.pkl
-        └── Subset_6_location_relation.pkl
-```
+### Transcational Data
+Due to space limitations, we can only provide a small portion of the data here(`./data`), considering that the raw data size is around 3.8GB. You can access the complete raw data by downloading it from either of the following links: https://dachxiu.chicagobooth.edu<sup><a href="#ref1">[1]</a></sup> or http://quant.zxlearn.cn.
 
+### Company Relations
+Firm relations can be found at `./data/relations`, including industry information and headquarter location.
+
+<br/>
+<br/>
+
+
+
+[1] <span name = "ref1">S. Gu, B. Kelly, and D. Xiu, “Empirical asset pricing via machine learning,” Review of Financial Studies, vol. 33, no. 5, pp. 2223–2273, 2020.</span>
+ 
+
+## Contact
+jiwenhuangfic@gmail.com
 

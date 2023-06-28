@@ -17,7 +17,7 @@ logging.basicConfig(filename="output.log", level=logging.DEBUG)
 # Training settings
 parser = argparse.ArgumentParser()
 parser.add_argument('--no-cuda', action='store_true', default=False, help='Disables CUDA training.')
-parser.add_argument('--seed', type=int, default=123, help='Random seed.')
+parser.add_argument('--seed', type=int, default=137, help='Random seed.')
 parser.add_argument('--epochs', type=int, default=1000, help='Number of epochs to train.')
 parser.add_argument('--lr', type=float, default=0.0005, help='Initial learning rate.')
 parser.add_argument('--weight_decay', type=float, default=0, help='Weight decay (L2 loss on parameters).')

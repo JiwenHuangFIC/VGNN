@@ -20,9 +20,9 @@ def split_data(data):
 
 def load_data():
 
-    Subset = load_pkl("./Processed data/Six Datasets/Subset_2.pkl")
-    industry_relation = load_pkl("./Processed data/Six Datasets relations/industry/Subset_2_industry_relation.pkl")
-    location_relation = load_pkl("./Processed data/Six Datasets relations/location/Subset_2_location_relation.pkl")
+    Subset = load_pkl("./data/SampleData.pkl")
+    industry_relation = load_pkl("./data/relations/Subset_2_industry_relation.pkl")
+    location_relation = load_pkl("/data/relations/Subset_2_location_relation.pkl")
 
     X = split_data(Subset)[0]
     y = split_data(Subset)[1]

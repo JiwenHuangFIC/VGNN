@@ -83,8 +83,8 @@ adj_Loc = adj_Loc.to(device)
 
 # Split data
 rnn_length = 12
-train_end_time = 12 * 7
-val_end_time = 12 * 9
+train_end_time = int(len(features)*0.7)
+val_end_time = int(len(features)*0.9)
 X_train, X_eval, X_test = features[:train_end_time], features[train_end_time - rnn_length + 1:val_end_time], features[val_end_time - rnn_length + 1:]
 y_train, y_eval, y_test = labels[:train_end_time], labels[train_end_time - rnn_length + 1:val_end_time], labels[val_end_time - rnn_length + 1:]
 
